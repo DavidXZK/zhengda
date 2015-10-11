@@ -25,10 +25,16 @@ for url in urlfile:
     m = re.findall(
         '<h1 class="title" id="page-title">([\s\S]*?)</h1>', content)  # name
     fp.write(m[0] + '\n')
-    m = re.findall('<div class="field-item">([\s\S]*?)</div>', content) # basic info
+   # m = re.findall('<table cellspacing="2" border="1" width="100%" id="basic-info">([\s\S]*?)</table>',content) # basic info
+   # m = re.findall('<td[\s\S]*?>([\s\S]*?)</td>', m[0]) # basic info
+    m = re.findall('<div class="field-items">([\s\S]*?)</div>', content) # basic info
     if m:
         for part in m:
             part = re.sub('\n', '', part)
+            part = re.sub('<div class="field-item even">', '', part)
+            part = re.sub('<div class="field-item">', '', part)
+            part = re.sub('<a href="[\s\S]*?">', '', part)
+            part = re.sub('</a>', '', part)
             part = part.lstrip()
             part = part.rstrip()
             fp.write(part + '\n')
